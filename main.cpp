@@ -6,7 +6,10 @@
  */
 
 #include <iostream>
+#include <sstream>
 #include "anomaly_detection_util.h"
+#include <vector>
+
 
 using namespace std;
 

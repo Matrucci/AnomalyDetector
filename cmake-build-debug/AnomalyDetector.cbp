@@ -86,6 +86,9 @@
 		<Unit filename="H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.h">
 			<Option target="AnomalyDetector"/>
 		</Unit>
+		<Unit filename="H:/Advanced Programming/AnomalyDetector/main.cpp">
+			<Option target="AnomalyDetector"/>
+		</Unit>
 		<Unit filename="H:/Advanced Programming/AnomalyDetector/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

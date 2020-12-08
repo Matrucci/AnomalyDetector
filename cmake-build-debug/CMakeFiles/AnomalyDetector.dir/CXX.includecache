@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.cpp
+anomaly_detection_util.h
+H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.h
+math.h
+-
+
+H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.h
+
+H:/Advanced Programming/AnomalyDetector/main.cpp
+iostream
+-
+sstream
+-
+anomaly_detection_util.h
+H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.h
+vector
+-
+
