@@ -99,6 +99,7 @@ int main(){
 		if(ar.description=="A-C" && ar.timeStep == anomaly)
 			anomlyDetected=true;
 		else {
+		    //cout << (ar.description=="A-C") << "--" << (ar.timeStep == anomaly) << endl;
             //cout << "The anomaly detected: " << ar.description << " with time: " << ar.timeStep << endl;
             falseAlarms++;
         }

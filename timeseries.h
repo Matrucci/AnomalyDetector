@@ -46,6 +46,7 @@ public:
     void addRow(vector<float> newRow);
     vector<string> getFeatures() const;
     vector<float> getVectorByFeature(string feature) const;
+    vector<string> splitTxt(string toSplit);
 
 };
 

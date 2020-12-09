@@ -39,28 +39,29 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             pAB = abs(pearson(a, b, vectors[i].size()));
             //cout << features[i] << " " << features[j] << endl;
             //cout << "PEARSON: " << pAB << endl;
-            if (pAB > maxAB) {
-                maxAB = pAB;
-                indexI = i;
-                indexJ = j;
-            }
-        }
-        if (maxAB > 0.9) {
-            for (int j = 0; j < sizeV; j++) {
-                points[j] = new Point(vectors[indexI][j], vectors[indexJ][j]);
-            }
-
-            Line reg = linear_reg(points, sizeV);
-            float maxRange = 0, currentDev;
-            for (int j = 0; j < sizeV; j++) {
-                currentDev = dev(*points[i], reg);
-                if (currentDev > maxRange) {
-                    maxRange = currentDev;
+            //if (pAB > maxAB) {
+            //    maxAB = pAB;
+            //    indexI = i;
+            //    indexJ = j;
+            //}
+            if (pAB > 0.9) {
+                for (int s = 0; s < sizeV; s++) {
+                    points[s] = new Point(vectors[i][s], vectors[j][s]);
                 }
+
+                Line reg = linear_reg(points, sizeV);
+                float maxRange = 0, currentDev;
+                for (int s = 0; s < sizeV; s++) {
+                    currentDev = dev(*points[s], reg);
+                    if (currentDev > maxRange) {
+                        maxRange = currentDev;
+                    }
+                }
+                cout << "The corolations are: " << features[i] << "-" << features[j] << endl;
+                cf.push_back({features[i], features[j], pAB, reg, maxRange});
             }
-            cf.push_back({features[indexI], features[indexJ], maxAB, reg, maxRange});
+            //maxAB = -1;
         }
-        maxAB = -1;
     }
 }
 
@@ -88,9 +89,11 @@ vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries& ts){
             float x = vectors[indexI][i];
             float y = vectors[indexJ][i];
             Point p = Point(x, y);
-            float currentDev = abs(dev(p, cf[i].lin_reg));
-            if (currentDev > cf[i].threshold) {
+            float currentDev = dev(p, cf[j].lin_reg);
+            if (currentDev > cf[j].threshold) {
+                //cout << currentDev << ", " << cf[j].threshold << endl;
                 string desc = cf[j].feature1 + "-" + cf[j].feature2;
+                //cout << desc <<endl;
                 AnomalyReport anomalyReport = AnomalyReport(desc, i + 1);
                 ar.push_back(anomalyReport);
             }

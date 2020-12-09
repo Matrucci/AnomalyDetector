@@ -1,16 +1,43 @@
+#include <sstream>
 #include "timeseries.h"
 
 using namespace std;
 
-bool endsWith(const std::string &mainStr, const std::string &toMatch)
-{
-    if(mainStr.size() >= toMatch.size() &&
-       mainStr.compare(mainStr.size() - toMatch.size(), toMatch.size(), toMatch) == 0)
-        return true;
-    else
-        return false;
+vector<string> TimeSeries::splitTxt(string toSplit){
+    vector<string> line;
+    istringstream ss(toSplit);
+    string substring;
+    while(getline(ss, substring, ',')){
+        line.push_back(substring);
+    }
+    return line;
 }
 
+TimeSeries::TimeSeries(const char *CSVfileName) {
+    ifstream ip(CSVfileName);
+    if (ip.is_open()) {
+        string newLine;
+        vector<string> temp;
+        getline(ip, newLine);
+        temp = splitTxt(newLine);
+        for(int i = 0; i<temp.size(); i++){
+            headers.push_back(temp[i]);
+        }
+        vector<float> features[headers.size()];
+        while (getline(ip, newLine)){
+            temp = splitTxt(newLine);
+            for(int i = 0; i<temp.size(); i++){
+                string newS = temp[i];
+                features[i].push_back(stof(newS));
+            }
+        }
+        for (int i = 0; i < headers.size(); i++) {
+            dataMap.insert(std::pair<string, vector<float>>(headers[i], features[i]));
+        }
+    }
+}
+
+/*
 TimeSeries::TimeSeries(const char *CSVfileName) {
     //vector<string> headers;
     ifstream ip(CSVfileName);
@@ -56,13 +83,13 @@ TimeSeries::TimeSeries(const char *CSVfileName) {
             parsed = std::stof(data);
             features[i].push_back(parsed);
         }
-         */
+
     }
     for (int i = 0; i < headers.size(); i++) {
         dataMap.insert(std::pair<string, vector<float>>(headers[i], features[i]));
     }
 }
-
+*/
 float TimeSeries::getFeatureOnTime(string feature, float time) {
     if (dataMap.count(feature) == 1) {
         int i = 0;
