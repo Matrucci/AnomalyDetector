@@ -76,18 +76,18 @@ include CMakeFiles/AnomalyDetector.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/AnomalyDetector.dir/flags.make
 
-CMakeFiles/AnomalyDetector.dir/main.cpp.obj: CMakeFiles/AnomalyDetector.dir/flags.make
-CMakeFiles/AnomalyDetector.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="H:\Advanced Programming\AnomalyDetector\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/AnomalyDetector.dir/main.cpp.obj"
-	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\AnomalyDetector.dir\main.cpp.obj -c "H:\Advanced Programming\AnomalyDetector\main.cpp"
+CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj: CMakeFiles/AnomalyDetector.dir/flags.make
+CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj: ../MainTrain.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="H:\Advanced Programming\AnomalyDetector\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\AnomalyDetector.dir\MainTrain.cpp.obj -c "H:\Advanced Programming\AnomalyDetector\MainTrain.cpp"
 
-CMakeFiles/AnomalyDetector.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AnomalyDetector.dir/main.cpp.i"
-	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "H:\Advanced Programming\AnomalyDetector\main.cpp" > CMakeFiles\AnomalyDetector.dir\main.cpp.i
+CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "H:\Advanced Programming\AnomalyDetector\MainTrain.cpp" > CMakeFiles\AnomalyDetector.dir\MainTrain.cpp.i
 
-CMakeFiles/AnomalyDetector.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AnomalyDetector.dir/main.cpp.s"
-	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "H:\Advanced Programming\AnomalyDetector\main.cpp" -o CMakeFiles\AnomalyDetector.dir\main.cpp.s
+CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "H:\Advanced Programming\AnomalyDetector\MainTrain.cpp" -o CMakeFiles\AnomalyDetector.dir\MainTrain.cpp.s
 
 CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.obj: CMakeFiles/AnomalyDetector.dir/flags.make
 CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.obj: ../anomaly_detection_util.cpp
@@ -102,21 +102,51 @@ CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.s"
 	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "H:\Advanced Programming\AnomalyDetector\anomaly_detection_util.cpp" -o CMakeFiles\AnomalyDetector.dir\anomaly_detection_util.cpp.s
 
+CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.obj: CMakeFiles/AnomalyDetector.dir/flags.make
+CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.obj: ../SimpleAnomalyDetector.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="H:\Advanced Programming\AnomalyDetector\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\AnomalyDetector.dir\SimpleAnomalyDetector.cpp.obj -c "H:\Advanced Programming\AnomalyDetector\SimpleAnomalyDetector.cpp"
+
+CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "H:\Advanced Programming\AnomalyDetector\SimpleAnomalyDetector.cpp" > CMakeFiles\AnomalyDetector.dir\SimpleAnomalyDetector.cpp.i
+
+CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "H:\Advanced Programming\AnomalyDetector\SimpleAnomalyDetector.cpp" -o CMakeFiles\AnomalyDetector.dir\SimpleAnomalyDetector.cpp.s
+
+CMakeFiles/AnomalyDetector.dir/timeseries.cpp.obj: CMakeFiles/AnomalyDetector.dir/flags.make
+CMakeFiles/AnomalyDetector.dir/timeseries.cpp.obj: ../timeseries.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="H:\Advanced Programming\AnomalyDetector\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/AnomalyDetector.dir/timeseries.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\AnomalyDetector.dir\timeseries.cpp.obj -c "H:\Advanced Programming\AnomalyDetector\timeseries.cpp"
+
+CMakeFiles/AnomalyDetector.dir/timeseries.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AnomalyDetector.dir/timeseries.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "H:\Advanced Programming\AnomalyDetector\timeseries.cpp" > CMakeFiles\AnomalyDetector.dir\timeseries.cpp.i
+
+CMakeFiles/AnomalyDetector.dir/timeseries.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AnomalyDetector.dir/timeseries.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "H:\Advanced Programming\AnomalyDetector\timeseries.cpp" -o CMakeFiles\AnomalyDetector.dir\timeseries.cpp.s
+
 # Object files for target AnomalyDetector
 AnomalyDetector_OBJECTS = \
-"CMakeFiles/AnomalyDetector.dir/main.cpp.obj" \
-"CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.obj"
+"CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj" \
+"CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.obj" \
+"CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.obj" \
+"CMakeFiles/AnomalyDetector.dir/timeseries.cpp.obj"
 
 # External object files for target AnomalyDetector
 AnomalyDetector_EXTERNAL_OBJECTS =
 
-AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/main.cpp.obj
+AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj
 AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.obj
+AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.obj
+AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/timeseries.cpp.obj
 AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/build.make
 AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/linklibs.rsp
 AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/objects1.rsp
 AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="H:\Advanced Programming\AnomalyDetector\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable AnomalyDetector.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="H:\Advanced Programming\AnomalyDetector\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable AnomalyDetector.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\AnomalyDetector.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

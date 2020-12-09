@@ -11,10 +11,11 @@
 using namespace std;
 
 class TimeSeries{
-
+    std::map<string, vector<float>> dataMap;
+    vector<string> headers;
 public:
-    std::map<string, vector<float>> map;
-	TimeSeries(const char* CSVfileName){
+    TimeSeries(const char* CSVfileName);
+	/*TimeSeries(const char* CSVfileName){
 	    vector<string> headers;
 	    ifstream ip(CSVfileName);
 	    if (!ip.is_open()) {
@@ -37,9 +38,15 @@ public:
             }
 	    }
 	    for (int i = 0; i < headers.size(); i++) {
-	        map.insert(std::pair<string, vector<float>>(headers[i], features[i]));
+            dataMap.insert(std::pair<string, vector<float>>(headers[i], features[i]));
 	    }
 	}
+	 */
+    float getFeatureOnTime(string feature, float time);
+    void addRow(vector<float> newRow);
+    vector<string> getFeatures() const;
+    vector<float> getVectorByFeature(string feature) const;
+
 };
 
 #endif /* TIMESERIES_H_ */

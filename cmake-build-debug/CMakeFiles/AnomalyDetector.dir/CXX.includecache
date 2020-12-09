@@ -6,21 +6,17 @@
 
 #IncludeRegexTransform: 
 
-H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.cpp
-anomaly_detection_util.h
-H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.h
-math.h
--
+H:/Advanced Programming/AnomalyDetector/timeseries.cpp
+timeseries.h
+H:/Advanced Programming/AnomalyDetector/timeseries.h
 
-H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.h
-
-H:/Advanced Programming/AnomalyDetector/main.cpp
-iostream
+H:/Advanced Programming/AnomalyDetector/timeseries.h
+map
 -
-sstream
--
-anomaly_detection_util.h
-H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.h
 vector
+-
+fstream
+-
+iostream
 -
 

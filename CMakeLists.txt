@@ -3,4 +3,4 @@ project(AnomalyDetector)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(AnomalyDetector main.cpp anomaly_detection_util.cpp)
+add_executable(AnomalyDetector MainTrain.cpp anomaly_detection_util.cpp SimpleAnomalyDetector.cpp timeseries.cpp)
