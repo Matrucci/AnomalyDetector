@@ -99,6 +99,7 @@ int main(){
 		if(ar.description=="A-C" && ar.timeStep == anomaly)
 			anomlyDetected=true;
 		else {
+		    cout << "FALSE ALARM AT: " << ar.timeStep << endl;
 		    //cout << (ar.description=="A-C") << "--" << (ar.timeStep == anomaly) << endl;
             //cout << "The anomaly detected: " << ar.description << " with time: " << ar.timeStep << endl;
             falseAlarms++;
