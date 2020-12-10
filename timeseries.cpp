@@ -3,6 +3,11 @@
 
 using namespace std;
 
+/************************************************
+ * Splitting a string by commas.
+ * @param toSplit - the string we want to split.
+ * @return - a vector with the splitted string.
+ ************************************************/
 vector<string> TimeSeries::splitTxt(string toSplit){
     vector<string> line;
     istringstream ss(toSplit);
@@ -13,83 +18,37 @@ vector<string> TimeSeries::splitTxt(string toSplit){
     return line;
 }
 
+/***********************************************************************************************
+ * Constructor.
+ * Parsing the data from the CSV and adding it to the map with the title and the data (column).
+ * @param CSVfileName - The csv input.
+ ************************************************************************************************/
 TimeSeries::TimeSeries(const char *CSVfileName) {
     ifstream ip(CSVfileName);
     if (ip.is_open()) {
         string newLine;
-        vector<string> temp;
+        vector<string> splittedLine;
         getline(ip, newLine);
-        temp = splitTxt(newLine);
-        for(int i = 0; i<temp.size(); i++){
-            headers.push_back(temp[i]);
+        splittedLine = splitTxt(newLine);
+        //Reading only the first line for titles.
+        for(int i = 0; i < splittedLine.size(); i++){
+            headers.push_back(splittedLine[i]);
         }
         vector<float> features[headers.size()];
+        //Reading the rest of the file for the data.
         while (getline(ip, newLine)){
-            temp = splitTxt(newLine);
-            for(int i = 0; i<temp.size(); i++){
-                string newS = temp[i];
-                features[i].push_back(stof(newS));
+            splittedLine = splitTxt(newLine);
+            for(int i = 0; i < splittedLine.size(); i++){
+                features[i].push_back(stof(splittedLine[i]));
             }
         }
+        //Inserting everything to the map.
         for (int i = 0; i < headers.size(); i++) {
             dataMap.insert(std::pair<string, vector<float>>(headers[i], features[i]));
         }
     }
 }
 
-/*
-TimeSeries::TimeSeries(const char *CSVfileName) {
-    //vector<string> headers;
-    ifstream ip(CSVfileName);
-    if (!ip.is_open()) {
-        std::cout << "ERROR: File could not be opened" << '\n';
-    }
-    string title;
-    if (ip.good()) {
-        getline(ip, title, '\n');
-        string splitBy = ",";
-        size_t pos = 0;
-        std::string token;
-        while ((pos = title.find(splitBy)) != std::string::npos) {
-            token = title.substr(0, pos);
-            headers.push_back(token);
-            title.erase(0, pos + splitBy.length());
-        }
-        headers.push_back(title);
-    }
-    vector<float> features[headers.size()];
-    string data;
-    float parsed;
-    while (ip.good()) {
-        int index = 0;
-        getline(ip, title, '\n');
-        string splitBy = ",";
-        size_t pos = 0;
-        std::string token;
-        while ((pos = title.find(splitBy)) != std::string::npos) {
-            token = title.substr(0, pos);
-            //cout << token << endl;
-            parsed = std::stof(token);
-            features[index].push_back(parsed);
-            title.erase(0, pos + splitBy.length());
-            index++;
-        }
-        //cout << title << endl;
-        parsed = std::stof(title);
-        features[index].push_back(parsed);
-        /*
-        for(int i = 0; i < headers.size(); i++) {
-            getline(ip, data, ',');
-            parsed = std::stof(data);
-            features[i].push_back(parsed);
-        }
-
-    }
-    for (int i = 0; i < headers.size(); i++) {
-        dataMap.insert(std::pair<string, vector<float>>(headers[i], features[i]));
-    }
-}
-*/
 
 /***
  * Getting the data from column "feature" in the given time.

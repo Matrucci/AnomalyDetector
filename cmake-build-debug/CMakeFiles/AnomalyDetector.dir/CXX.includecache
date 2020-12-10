@@ -36,6 +36,12 @@ math.h
 
 H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.h
 
+H:/Advanced Programming/AnomalyDetector/timeseries.cpp
+sstream
+-
+timeseries.h
+H:/Advanced Programming/AnomalyDetector/timeseries.h
+
 H:/Advanced Programming/AnomalyDetector/timeseries.h
 map
 -
