@@ -47,7 +47,6 @@ float cov(float* x, float* y, int size) {
 
 //returns the Pearson correlation coefficient of X and Y
 float pearson(float* x, float* y, int size) {
-    cout << "P: COV: " << cov(x, y, size) << ", var: " <<  sqrt(var(x, size) * var(y, size)) << endl;
     return (cov(x, y, size) / sqrt(var(x, size) * var(y, size)));
 }
 
@@ -60,7 +59,6 @@ Line linear_reg(Point** points, int size) {
         x[i] = points[i]->x;
         y[i] = points[i]->y;
     }
-    cout << "LR: COV: " << cov(x,y, size) << ", " << var(x, size) << endl;
     a = cov(x, y, size) / var(x, size);
     b = avg(y, size) - a * avg(x, size);
     return Line(a, b);

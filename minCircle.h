@@ -1,9 +1,11 @@
-// ID1	ID2
+// 318570769	315902239
 
 #ifndef MINCIRCLE_H_
 #define MINCIRCLE_H_
 
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
