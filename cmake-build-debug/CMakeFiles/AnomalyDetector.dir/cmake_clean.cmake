@@ -2,9 +2,9 @@ file(REMOVE_RECURSE
   "AnomalyDetector.exe"
   "AnomalyDetector.exe.manifest"
   "AnomalyDetector.pdb"
-  "CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj"
   "CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.obj"
   "CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.obj"
+  "CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.obj"
   "CMakeFiles/AnomalyDetector.dir/timeseries.cpp.obj"
   "libAnomalyDetector.dll.a"
 )

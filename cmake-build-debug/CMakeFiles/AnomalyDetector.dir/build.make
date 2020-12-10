@@ -76,18 +76,18 @@ include CMakeFiles/AnomalyDetector.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/AnomalyDetector.dir/flags.make
 
-CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj: CMakeFiles/AnomalyDetector.dir/flags.make
-CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj: ../MainTrain.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="H:\Advanced Programming\AnomalyDetector\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj"
-	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\AnomalyDetector.dir\MainTrain.cpp.obj -c "H:\Advanced Programming\AnomalyDetector\MainTrain.cpp"
+CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.obj: CMakeFiles/AnomalyDetector.dir/flags.make
+CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.obj: ../mainCircle.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="H:\Advanced Programming\AnomalyDetector\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\AnomalyDetector.dir\mainCircle.cpp.obj -c "H:\Advanced Programming\AnomalyDetector\mainCircle.cpp"
 
-CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.i"
-	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "H:\Advanced Programming\AnomalyDetector\MainTrain.cpp" > CMakeFiles\AnomalyDetector.dir\MainTrain.cpp.i
+CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "H:\Advanced Programming\AnomalyDetector\mainCircle.cpp" > CMakeFiles\AnomalyDetector.dir\mainCircle.cpp.i
 
-CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.s"
-	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "H:\Advanced Programming\AnomalyDetector\MainTrain.cpp" -o CMakeFiles\AnomalyDetector.dir\MainTrain.cpp.s
+CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "H:\Advanced Programming\AnomalyDetector\mainCircle.cpp" -o CMakeFiles\AnomalyDetector.dir\mainCircle.cpp.s
 
 CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.obj: CMakeFiles/AnomalyDetector.dir/flags.make
 CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.obj: ../anomaly_detection_util.cpp
@@ -130,7 +130,7 @@ CMakeFiles/AnomalyDetector.dir/timeseries.cpp.s: cmake_force
 
 # Object files for target AnomalyDetector
 AnomalyDetector_OBJECTS = \
-"CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj" \
+"CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.obj" \
 "CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.obj" \
 "CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.obj" \
 "CMakeFiles/AnomalyDetector.dir/timeseries.cpp.obj"
@@ -138,7 +138,7 @@ AnomalyDetector_OBJECTS = \
 # External object files for target AnomalyDetector
 AnomalyDetector_EXTERNAL_OBJECTS =
 
-AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj
+AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.obj
 AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.obj
 AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/SimpleAnomalyDetector.cpp.obj
 AnomalyDetector.exe: CMakeFiles/AnomalyDetector.dir/timeseries.cpp.obj

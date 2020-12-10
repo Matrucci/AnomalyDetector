@@ -6,49 +6,15 @@
 
 #IncludeRegexTransform: 
 
-H:/Advanced Programming/AnomalyDetector/AnomalyDetector.h
-string
--
-vector
--
-timeseries.h
-H:/Advanced Programming/AnomalyDetector/timeseries.h
-math.h
-H:/Advanced Programming/AnomalyDetector/math.h
+H:/Advanced Programming/AnomalyDetector/mainCircle.cpp
+minCircle.h
+H:/Advanced Programming/AnomalyDetector/minCircle.h
 
-H:/Advanced Programming/AnomalyDetector/SimpleAnomalyDetector.cpp
-SimpleAnomalyDetector.h
-H:/Advanced Programming/AnomalyDetector/SimpleAnomalyDetector.h
-
-H:/Advanced Programming/AnomalyDetector/SimpleAnomalyDetector.h
-anomaly_detection_util.h
-H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.h
-AnomalyDetector.h
-H:/Advanced Programming/AnomalyDetector/AnomalyDetector.h
-vector
--
-algorithm
--
-string.h
--
-math.h
--
-
-H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.h
-
-H:/Advanced Programming/AnomalyDetector/timeseries.cpp
-sstream
--
-timeseries.h
-H:/Advanced Programming/AnomalyDetector/timeseries.h
-
-H:/Advanced Programming/AnomalyDetector/timeseries.h
-map
--
-vector
--
-fstream
--
+H:/Advanced Programming/AnomalyDetector/minCircle.h
 iostream
+-
+math.h
+-
+vector
 -
 

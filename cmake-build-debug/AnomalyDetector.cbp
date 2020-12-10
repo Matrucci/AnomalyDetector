@@ -80,9 +80,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="H:/Advanced Programming/AnomalyDetector/MainTrain.cpp">
-			<Option target="AnomalyDetector"/>
-		</Unit>
 		<Unit filename="H:/Advanced Programming/AnomalyDetector/SimpleAnomalyDetector.cpp">
 			<Option target="AnomalyDetector"/>
 		</Unit>
@@ -93,6 +90,9 @@
 			<Option target="AnomalyDetector"/>
 		</Unit>
 		<Unit filename="H:/Advanced Programming/AnomalyDetector/anomaly_detection_util.h">
+			<Option target="AnomalyDetector"/>
+		</Unit>
+		<Unit filename="H:/Advanced Programming/AnomalyDetector/mainCircle.cpp">
 			<Option target="AnomalyDetector"/>
 		</Unit>
 		<Unit filename="H:/Advanced Programming/AnomalyDetector/timeseries.cpp">
