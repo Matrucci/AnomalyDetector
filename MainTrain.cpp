@@ -78,7 +78,7 @@ int main(){
 
     if(cf.size()!=2) {
         cout << cf.size() << endl;
-        cout << "wrong size of correlated features (-40)" << endl;
+        //cout << "wrong size of correlated features (-40)" << endl;
     }
 	else
 	for_each(cf.begin(),cf.end(),[&a1,&b1,&a2,&b2](correlatedFeatures c){
@@ -99,7 +99,7 @@ int main(){
 		if(ar.description=="A-C" && ar.timeStep == anomaly)
 			anomlyDetected=true;
 		else {
-		    cout << "FALSE ALARM AT: " << ar.timeStep << endl;
+		    //cout << "FALSE ALARM AT: " << ar.timeStep << endl;
 		    //cout << (ar.description=="A-C") << "--" << (ar.timeStep == anomaly) << endl;
             //cout << "The anomaly detected: " << ar.description << " with time: " << ar.timeStep << endl;
             falseAlarms++;

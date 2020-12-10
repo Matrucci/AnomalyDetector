@@ -90,6 +90,13 @@ TimeSeries::TimeSeries(const char *CSVfileName) {
     }
 }
 */
+
+/***
+ * Getting the data from column "feature" in the given time.
+ * @param feature - The title (column).
+ * @param time - the time.
+ * @return - the data in that cell.
+ */
 float TimeSeries::getFeatureOnTime(string feature, float time) {
     if (dataMap.count(feature) == 1) {
         int i = 0;
@@ -103,6 +110,10 @@ float TimeSeries::getFeatureOnTime(string feature, float time) {
     return -1; //ERROR
 }
 
+/********************************************
+ * Adding a new row of data.
+ * @param newRow - new float vector to add.
+ ********************************************/
 void TimeSeries::addRow(vector<float> newRow) {
     for (int i = 0; i < headers.size(); i++) {
         if (dataMap.count(headers[i]) == 1) {
@@ -110,19 +121,23 @@ void TimeSeries::addRow(vector<float> newRow) {
         }
     }
 }
+
+/************************
+ * @return - The titles.
+ ***********************/
 vector<string> TimeSeries::getFeatures() const {
     vector<string> headersCopy;
     for (const auto& element: headers) {
         headersCopy.push_back(element);
     }
-    /*
-    for (int i = 0; i < headersCopy.size(); i++) {
-        cout << headersCopy[i] << endl;
-    }
-     */
     return headersCopy;
 }
 
+/*******************************************
+ * Getting the correct column by the title.
+ * @param feature - The title.
+ * @return - The correct column as a vector.
+ *******************************************/
 vector<float> TimeSeries::getVectorByFeature(string feature) const {
     vector<float> copy;
     for(auto element: dataMap.find(feature)->second) {
