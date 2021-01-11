@@ -142,6 +142,33 @@ AnomalyDetector/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\AnomalyDetector.dir\build.make CMakeFiles/AnomalyDetector.dir/build
 .PHONY : AnomalyDetector/fast
 
+MainTrain.obj: MainTrain.cpp.obj
+
+.PHONY : MainTrain.obj
+
+# target to build an object file
+MainTrain.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AnomalyDetector.dir\build.make CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.obj
+.PHONY : MainTrain.cpp.obj
+
+MainTrain.i: MainTrain.cpp.i
+
+.PHONY : MainTrain.i
+
+# target to preprocess a source file
+MainTrain.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AnomalyDetector.dir\build.make CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.i
+.PHONY : MainTrain.cpp.i
+
+MainTrain.s: MainTrain.cpp.s
+
+.PHONY : MainTrain.s
+
+# target to generate assembly for a file
+MainTrain.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AnomalyDetector.dir\build.make CMakeFiles/AnomalyDetector.dir/MainTrain.cpp.s
+.PHONY : MainTrain.cpp.s
+
 SimpleAnomalyDetector.obj: SimpleAnomalyDetector.cpp.obj
 
 .PHONY : SimpleAnomalyDetector.obj
@@ -196,33 +223,6 @@ anomaly_detection_util.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\AnomalyDetector.dir\build.make CMakeFiles/AnomalyDetector.dir/anomaly_detection_util.cpp.s
 .PHONY : anomaly_detection_util.cpp.s
 
-mainCircle.obj: mainCircle.cpp.obj
-
-.PHONY : mainCircle.obj
-
-# target to build an object file
-mainCircle.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\AnomalyDetector.dir\build.make CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.obj
-.PHONY : mainCircle.cpp.obj
-
-mainCircle.i: mainCircle.cpp.i
-
-.PHONY : mainCircle.i
-
-# target to preprocess a source file
-mainCircle.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\AnomalyDetector.dir\build.make CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.i
-.PHONY : mainCircle.cpp.i
-
-mainCircle.s: mainCircle.cpp.s
-
-.PHONY : mainCircle.s
-
-# target to generate assembly for a file
-mainCircle.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\AnomalyDetector.dir\build.make CMakeFiles/AnomalyDetector.dir/mainCircle.cpp.s
-.PHONY : mainCircle.cpp.s
-
 timeseries.obj: timeseries.cpp.obj
 
 .PHONY : timeseries.obj
@@ -259,15 +259,15 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... AnomalyDetector
+	@echo ... MainTrain.obj
+	@echo ... MainTrain.i
+	@echo ... MainTrain.s
 	@echo ... SimpleAnomalyDetector.obj
 	@echo ... SimpleAnomalyDetector.i
 	@echo ... SimpleAnomalyDetector.s
 	@echo ... anomaly_detection_util.obj
 	@echo ... anomaly_detection_util.i
 	@echo ... anomaly_detection_util.s
-	@echo ... mainCircle.obj
-	@echo ... mainCircle.i
-	@echo ... mainCircle.s
 	@echo ... timeseries.obj
 	@echo ... timeseries.i
 	@echo ... timeseries.s

@@ -47,6 +47,7 @@ TimeSeries::TimeSeries(const char *CSVfileName) {
             dataMap.insert(std::pair<string, vector<float>>(headers[i], features[i]));
         }
     }
+    ip.close();
 }
 
 
