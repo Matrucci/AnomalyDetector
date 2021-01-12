@@ -6,16 +6,11 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "anomaly_detection_util.h"
 
 using namespace std;
 
 // ------------ DO NOT CHANGE -----------
-class Point{
-public:
-    float x,y;
-    Point(float x,float y):x(x),y(y){}
-};
-
 class Circle{
 public:
     Point center;

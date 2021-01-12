@@ -20,6 +20,35 @@ void buildArray(float* a, vector<float> toArrayA) {
     }
 }
 
+/**
+ *
+ * @param a
+ * @param b
+ * @return
+ */
+Point** createPoints(vector<float> *a, vector<float> *b) {
+    int sizeV = a->size();
+    Point** points = new Point*[sizeV];
+    for (int s = 0; s < sizeV; s++) {
+        points[s] = new Point((*a)[s], (*b)[s]);
+    }
+    return points;
+}
+
+
+float getMaxForHigh(vector<float> *a, vector<float> *b, Point** points, Line* reg) {
+    int sizeV = a->size();
+    float maxRange = 0, currentDev;
+    //Checking the max distance from the reg line.
+    for (int s = 0; s < sizeV; s++) {
+        currentDev = dev(*points[s], *reg);
+        if (currentDev > maxRange) {
+            maxRange = currentDev;
+        }
+    }
+    return maxRange;
+}
+
 /******************************************************
  * Offline learning of the normal data.
  * Setting the parameters for the anomaly detection.
@@ -36,7 +65,8 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
     int sizeV = vectors[0].size();
     float a[sizeV], b[sizeV];
     float pAB;
-    Point** points = new Point*[sizeV];
+    float maxRange;
+    Point** points;
     //Going over every 2 (not equal) columns.
     for (int i = 0; i < vectors.size() - 1; i++) {
         buildArray(a, vectors[i]);
@@ -46,20 +76,10 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             pAB = abs(pearson(a, b, vectors[i].size()));
             //Strong correlation.
             if (pAB > 0.9) {
-                for (int s = 0; s < sizeV; s++) {
-                    points[s] = new Point(vectors[i][s], vectors[j][s]);
-                }
+                points = createPoints(&vectors[i], &vectors[j]);
                 Line reg = linear_reg(points, sizeV);
-                float maxRange = 0, currentDev;
-                //Checking the max distance from the reg line.
-                for (int s = 0; s < sizeV; s++) {
-                    currentDev = dev(*points[s], reg);
-                    if (currentDev > maxRange) {
-                        maxRange = currentDev;
-                    }
-                }
+                maxRange = 1.2 * getMaxForHigh(&vectors[i], &vectors[j], points, &reg);
                 //Leaving some "wiggle room" for errors since an anomaly is a bigger difference.
-                maxRange = maxRange * 1.2;
                 cf.push_back({features[i], features[j], pAB, reg, maxRange});
             }
         }
