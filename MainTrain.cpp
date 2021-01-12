@@ -71,8 +71,9 @@ void generateTestCSV(float a1,float b1, float a2, float b2, float a3, float b3){
 
 void checkCorrelation(correlatedFeatures c,string f1, string f2, float a, float b){
 	if(c.feature1==f1){
-		if(c.feature2!=f2)
-			cout<<"wrong correlated feature of "<<f1<<" (-10)"<<endl;
+		if(c.feature2!=f2) {
+            cout<<"wrong correlated feature of "<<f1<<" (-10)"<<endl;
+        }
 		else{
 			if(c.corrlation>=0.9){
 				if(c.corrlation<0.99)
@@ -111,8 +112,10 @@ int main(){
 	ad.learnNormal(ts);
 	vector<correlatedFeatures> cf=ad.getNormalModel();
 
-	if(cf.size()!=3)
-		cout<<"wrong size of correlated features (-40)"<<endl;
+	if(cf.size()!=3) {
+        cout<<"wrong size of correlated features (-40)"<<endl;
+        cout<<cf.size()<<endl;
+    }
 	else
 	for_each(cf.begin(),cf.end(),[&a1,&b1,&a2,&b2,&a3,&b3](correlatedFeatures c){
 		checkCorrelation(c,"A","B",a1,b1); // 10 points

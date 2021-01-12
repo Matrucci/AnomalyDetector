@@ -15,7 +15,7 @@ struct correlatedFeatures{
 	float corrlation;
 	Line lin_reg;
 	float threshold;
-	//Point* circleCenter;
+	Point* circleCenter;
 };
 
 
@@ -27,6 +27,8 @@ public:
 
 	virtual void learnNormal(const TimeSeries& ts);
 	virtual vector<AnomalyReport> detect(const TimeSeries& ts);
+    virtual void highPearson(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p);
+    virtual void tryDetect(int i, int j, vector<string> *features, vector<vector<float>> vectors, vector<AnomalyReport> *ar);
 
 	vector<correlatedFeatures> getNormalModel(){
 		return cf;

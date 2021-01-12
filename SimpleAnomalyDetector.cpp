@@ -36,18 +36,22 @@ Point** createPoints(vector<float> *a, vector<float> *b) {
 }
 
 
-float getMaxForHigh(vector<float> *a, vector<float> *b, Point** points, Line* reg) {
-    int sizeV = a->size();
+void SimpleAnomalyDetector::highPearson(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p) {
+    Point** points = createPoints(&vectors[i], &vectors[j]);
+    int sizeV = vectors[0].size();
+    Line reg = linear_reg(points, sizeV);
     float maxRange = 0, currentDev;
     //Checking the max distance from the reg line.
     for (int s = 0; s < sizeV; s++) {
-        currentDev = dev(*points[s], *reg);
+        currentDev = dev(*points[s], reg);
         if (currentDev > maxRange) {
             maxRange = currentDev;
         }
     }
-    return maxRange;
+    maxRange *= 1.2;
+    cf.push_back({(*features)[i], (*features)[j], p, reg, maxRange, NULL});
 }
+
 
 /******************************************************
  * Offline learning of the normal data.
@@ -65,8 +69,7 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
     int sizeV = vectors[0].size();
     float a[sizeV], b[sizeV];
     float pAB;
-    float maxRange;
-    Point** points;
+
     //Going over every 2 (not equal) columns.
     for (int i = 0; i < vectors.size() - 1; i++) {
         buildArray(a, vectors[i]);
@@ -76,11 +79,7 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             pAB = abs(pearson(a, b, vectors[i].size()));
             //Strong correlation.
             if (pAB > 0.9) {
-                points = createPoints(&vectors[i], &vectors[j]);
-                Line reg = linear_reg(points, sizeV);
-                maxRange = 1.2 * getMaxForHigh(&vectors[i], &vectors[j], points, &reg);
-                //Leaving some "wiggle room" for errors since an anomaly is a bigger difference.
-                cf.push_back({features[i], features[j], pAB, reg, maxRange});
+                highPearson(vectors, &features, i, j, pAB);
             }
         }
     }
@@ -101,6 +100,23 @@ int getIndex(vector<string> vec, string str) {
     return -1; //Not found.
 }
 
+void SimpleAnomalyDetector::tryDetect(int i, int j, vector<string> *features, vector<vector<float>> vectors,
+                                               vector<AnomalyReport> *ar) {
+    int indexI = getIndex(*features, cf[j].feature1);
+    int indexJ = getIndex(*features, cf[j].feature2);
+    //Getting the values of the row.
+    float x = vectors[indexI][i];
+    float y = vectors[indexJ][i];
+    Point p = Point(x, y);
+    float currentDev = dev(p, cf[j].lin_reg);
+    //Checking if there's an anomaly.
+    if (currentDev > cf[j].threshold) {
+        string desc = cf[j].feature1 + "-" + cf[j].feature2;
+        AnomalyReport anomalyReport = AnomalyReport(desc, i + 1);
+        (*ar).push_back(anomalyReport);
+    }
+}
+
 /***********************************************************
  * Going over TimeSeries and checking if there's an anomaly.
  * @param ts - The TimeSeries variable containing the data.
@@ -117,6 +133,7 @@ vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries& ts){
     //For every row of data, check with the correlatedFeatures vector to see if there's an anomaly.
     for (int i = 0; i < vectors[0].size(); i++) {
         for (int j = 0; j < cf.size(); j++) {
+            /*
             //Getting the index of the features.
             int indexI = getIndex(features, cf[j].feature1);
             int indexJ = getIndex(features, cf[j].feature2);
@@ -131,6 +148,8 @@ vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries& ts){
                 AnomalyReport anomalyReport = AnomalyReport(desc, i + 1);
                 ar.push_back(anomalyReport);
             }
+             */
+            tryDetect(i, j, &features, vectors, &ar);
         }
     }
     return ar;
