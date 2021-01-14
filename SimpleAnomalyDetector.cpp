@@ -1,5 +1,6 @@
 
 #include "SimpleAnomalyDetector.h"
+#include "minCircle.h"
 
 SimpleAnomalyDetector::SimpleAnomalyDetector() {
 }
@@ -49,8 +50,10 @@ void SimpleAnomalyDetector::highPearson(vector<vector<float>> vectors, vector<st
         }
     }
     maxRange *= 1.2;
-    cf.push_back({(*features)[i], (*features)[j], p, reg, maxRange, NULL});
+    cf.push_back({(*features)[i], (*features)[j], p, reg, maxRange, nullptr});
 }
+
+
 
 
 /******************************************************
@@ -78,7 +81,7 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             //Checking the correlation.
             pAB = abs(pearson(a, b, vectors[i].size()));
             //Strong correlation.
-            if (pAB > 0.9) {
+            if (pAB >= 0.9) {
                 highPearson(vectors, &features, i, j, pAB);
             }
         }
@@ -100,8 +103,8 @@ int getIndex(vector<string> vec, string str) {
     return -1; //Not found.
 }
 
-void SimpleAnomalyDetector::tryDetect(int i, int j, vector<string> *features, vector<vector<float>> vectors,
-                                               vector<AnomalyReport> *ar) {
+void SimpleAnomalyDetector::detectHigh(int i, int j, vector<string> *features, vector<vector<float>> vectors,
+                                       vector<AnomalyReport> *ar) {
     int indexI = getIndex(*features, cf[j].feature1);
     int indexJ = getIndex(*features, cf[j].feature2);
     //Getting the values of the row.
@@ -115,6 +118,7 @@ void SimpleAnomalyDetector::tryDetect(int i, int j, vector<string> *features, ve
         AnomalyReport anomalyReport = AnomalyReport(desc, i + 1);
         (*ar).push_back(anomalyReport);
     }
+
 }
 
 /***********************************************************
@@ -133,25 +137,27 @@ vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries& ts){
     //For every row of data, check with the correlatedFeatures vector to see if there's an anomaly.
     for (int i = 0; i < vectors[0].size(); i++) {
         for (int j = 0; j < cf.size(); j++) {
-            /*
-            //Getting the index of the features.
+            //detectHigh(i, j, &features, vectors, &ar);
             int indexI = getIndex(features, cf[j].feature1);
             int indexJ = getIndex(features, cf[j].feature2);
             //Getting the values of the row.
             float x = vectors[indexI][i];
             float y = vectors[indexJ][i];
             Point p = Point(x, y);
-            float currentDev = dev(p, cf[j].lin_reg);
+            //float currentDev = dev(p, cf[j].lin_reg);
+            float dis = distanceBetween(p, cf[j]);
             //Checking if there's an anomaly.
-            if (currentDev > cf[j].threshold) {
+            if (dis > cf[j].threshold) {
                 string desc = cf[j].feature1 + "-" + cf[j].feature2;
                 AnomalyReport anomalyReport = AnomalyReport(desc, i + 1);
                 ar.push_back(anomalyReport);
             }
-             */
-            tryDetect(i, j, &features, vectors, &ar);
         }
     }
     return ar;
+}
+
+float SimpleAnomalyDetector::distanceBetween(Point p, correlatedFeatures cf) {
+    return dev(p, cf.lin_reg);
 }
 

@@ -8,6 +8,7 @@
 using namespace std;
 
 float distacneBetween(Point a, Point b) {
+    //cout << "a: " << a.x << ", " << a.y << "--- b: " << b.x << ", " << b.y << endl;
     return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
 }
 
