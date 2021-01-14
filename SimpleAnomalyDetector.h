@@ -28,10 +28,7 @@ public:
 
 	virtual void learnNormal(const TimeSeries& ts);
 	virtual vector<AnomalyReport> detect(const TimeSeries& ts);
-    virtual void highPearson(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p);
-    virtual void detectHigh(int i, int j, vector<string> *features, vector<vector<float>> vectors,
-                            vector<AnomalyReport> *ar);
-    //virtual void midPearson(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p);
+    virtual void learn(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p);
     virtual float distanceBetween(Point p, correlatedFeatures cf);
 
 	vector<correlatedFeatures> getNormalModel(){

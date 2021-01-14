@@ -37,20 +37,22 @@ Point** createPoints(vector<float> *a, vector<float> *b) {
 }
 
 
-void SimpleAnomalyDetector::highPearson(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p) {
-    Point** points = createPoints(&vectors[i], &vectors[j]);
-    int sizeV = vectors[0].size();
-    Line reg = linear_reg(points, sizeV);
-    float maxRange = 0, currentDev;
-    //Checking the max distance from the reg line.
-    for (int s = 0; s < sizeV; s++) {
-        currentDev = dev(*points[s], reg);
-        if (currentDev > maxRange) {
-            maxRange = currentDev;
+void SimpleAnomalyDetector::learn(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p) {
+    if (p >= 0.9) {
+        Point** points = createPoints(&vectors[i], &vectors[j]);
+        int sizeV = vectors[0].size();
+        Line reg = linear_reg(points, sizeV);
+        float maxRange = 0, currentDev;
+        //Checking the max distance from the reg line.
+        for (int s = 0; s < sizeV; s++) {
+            currentDev = dev(*points[s], reg);
+            if (currentDev > maxRange) {
+                maxRange = currentDev;
+            }
         }
+        maxRange *= 1.2;
+        cf.push_back({(*features)[i], (*features)[j], p, reg, maxRange, nullptr});
     }
-    maxRange *= 1.2;
-    cf.push_back({(*features)[i], (*features)[j], p, reg, maxRange, nullptr});
 }
 
 
@@ -80,10 +82,7 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             buildArray(b,vectors[j]);
             //Checking the correlation.
             pAB = abs(pearson(a, b, vectors[i].size()));
-            //Strong correlation.
-            if (pAB >= 0.9) {
-                highPearson(vectors, &features, i, j, pAB);
-            }
+            learn(vectors, &features, i, j, pAB);
         }
     }
 }
@@ -101,24 +100,6 @@ int getIndex(vector<string> vec, string str) {
         }
     }
     return -1; //Not found.
-}
-
-void SimpleAnomalyDetector::detectHigh(int i, int j, vector<string> *features, vector<vector<float>> vectors,
-                                       vector<AnomalyReport> *ar) {
-    int indexI = getIndex(*features, cf[j].feature1);
-    int indexJ = getIndex(*features, cf[j].feature2);
-    //Getting the values of the row.
-    float x = vectors[indexI][i];
-    float y = vectors[indexJ][i];
-    Point p = Point(x, y);
-    float currentDev = dev(p, cf[j].lin_reg);
-    //Checking if there's an anomaly.
-    if (currentDev > cf[j].threshold) {
-        string desc = cf[j].feature1 + "-" + cf[j].feature2;
-        AnomalyReport anomalyReport = AnomalyReport(desc, i + 1);
-        (*ar).push_back(anomalyReport);
-    }
-
 }
 
 /***********************************************************
