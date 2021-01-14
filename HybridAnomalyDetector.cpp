@@ -10,12 +10,12 @@ HybridAnomalyDetector::~HybridAnomalyDetector() {
 	// TODO Auto-generated destructor stub
 }
 
-/**
- *
- * @param a
- * @param b
- * @return
- */
+/************************************************************
+ * Taking 2 float vectors and creating a point array.
+ * @param a - The first vector (the x value of the point).
+ * @param b - The second vector (the y value of the point).
+ * @return - An array of pointers to points.
+ ************************************************************/
 Point** buildPointArray(vector<float> *a, vector<float> *b) {
     int sizeV = a->size();
     Point** points = new Point*[sizeV];
@@ -25,12 +25,13 @@ Point** buildPointArray(vector<float> *a, vector<float> *b) {
     return points;
 }
 
-/**
- *
- * @param p
- * @param cf
- * @return
- */
+/**************************************************************************************************
+ * If the correlation is 0.9 and above, we want to check the dev from the line.
+ * If the correlation is 0.5 or higher we want to know the distance from the center of the circle.
+ * @param p - The point to check the distance from.
+ * @param cf - The struct holding the correlation, the linear reg and the circle center.
+ * @return float - the distance.
+ **************************************************************************************************/
 float HybridAnomalyDetector::distanceBetween(Point p, correlatedFeatures cf) {
     if (cf.corrlation >= 0.9) {
         return SimpleAnomalyDetector::distanceBetween(p, cf);
@@ -38,14 +39,15 @@ float HybridAnomalyDetector::distanceBetween(Point p, correlatedFeatures cf) {
     return distacneBetween(*cf.circleCenter, p);
 }
 
-/**
- *
- * @param vectors
- * @param features
- * @param i
- * @param j
- * @param p
- */
+/***********************************************************************
+ * Learning the correlations and adding to the cf vector.
+ * This overrides the function from SimpleAnomalyDetector.
+ * @param vectors - Vector holding all the vectors of all the features.
+ * @param features - Vector holding the titles of the features
+ * @param i - The first feature vector
+ * @param j - The second feature vector
+ * @param p - The pearson between the 2 features
+ *************************************************************************/
 void HybridAnomalyDetector::learn(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p) {
     if (p >= 0.9) {
         SimpleAnomalyDetector::learn(vectors, features, i, j, p);

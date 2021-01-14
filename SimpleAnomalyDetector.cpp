@@ -21,12 +21,12 @@ void buildArray(float* a, vector<float> toArrayA) {
     }
 }
 
-/**
- *
- * @param a
- * @param b
- * @return
- */
+/************************************************************
+ * Taking 2 float vectors and creating a point array.
+ * @param a - The first vector (the x value of the point).
+ * @param b - The second vector (the y value of the point).
+ * @return - An array of pointers to points.
+ ************************************************************/
 Point** createPoints(vector<float> *a, vector<float> *b) {
     int sizeV = a->size();
     Point** points = new Point*[sizeV];
@@ -36,7 +36,14 @@ Point** createPoints(vector<float> *a, vector<float> *b) {
     return points;
 }
 
-
+/***********************************************************************
+ * Learning the correlations and adding to the cf vector.
+ * @param vectors - Vector holding all the vectors of all the features.
+ * @param features - Vector holding the titles of the features
+ * @param i - The first feature vector
+ * @param j - The second feature vector
+ * @param p - The pearson between the 2 features
+ *************************************************************************/
 void SimpleAnomalyDetector::learn(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p) {
     if (p >= 0.9) {
         Point** points = createPoints(&vectors[i], &vectors[j]);
@@ -138,6 +145,12 @@ vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries& ts){
     return ar;
 }
 
+/***********************************************************
+ * Calculating the dev between the point and the line
+ * @param p - The point to check
+ * @param cf - Struct holding the line and the correlation
+ * @return float - The dev
+ ***********************************************************/
 float SimpleAnomalyDetector::distanceBetween(Point p, correlatedFeatures cf) {
     return dev(p, cf.lin_reg);
 }
