@@ -1,25 +1,50 @@
 #include "CLI.h"
 
 CLI::CLI(DefaultIO* dio) {
-    int menuSize = 7;
-    Command* menu[7];
-    menu[0] = nullptr;
-    menu[1] = new uploadTS;
-    menu[2] = new settings;
-    menu[3] = new detectAnomalies;
-    menu[4] = new results;
-    menu[5] = new uploadAndAnalyze;
-    menu[6] = new exitProgram;
-    this->commands = *menu;
+
     this->dio = dio;
 }
 
 void CLI::start(){
-    Command* menu = this->commands;
-    for (int i = 1; i <= 6; i++) {
-        menu[i].printDes();
+    int size = 6;
+    float option;
+    bool run = true;
+    Command** menu = new Command*[size];
+    menu[0] = new uploadTS(dio);
+    menu[1] = new settings(dio);
+    menu[2] = new detectAnomalies(dio);
+    menu[3] = new results(dio);
+    menu[4] = new uploadAndAnalyze(dio);
+    menu[5] = new exitProgram(dio);
+    //this->commands = *menu;
+    while (run) {
+        dio->write("Welcome to the Anomaly Detection Server.\n");
+        dio->write("Please choose an option:\n");
+
+        for (int i = 0; i < size; i++) {
+            menu[i]->printDes();
+        }
+        dio->read(&option);
+        if (floorf(option) == option && option > 0 && option < 7) {
+            int iOption = int(option);
+            menu[iOption - 1]->execute();
+            if (iOption == 6) {
+                run = false;
+            }
+        }
+        //cout << "DONE" << endl;
     }
-    //dio->read()
+    dio->write("Welcome to the Anomaly Detection Server.\n");
+    dio->write("Please choose an option:\n");
+
+    for (int i = 0; i < size; i++) {
+        menu[i]->printDes();
+    }
+    dio->read(&option);
+    if (floorf(option) == option && option > 0 && option < 7) {
+        int iOption = int(option);
+        menu[iOption - 1]->execute();
+    }
 }
 
 
