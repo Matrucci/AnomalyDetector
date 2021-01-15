@@ -1,3 +1,8 @@
+/**************************
+ * Author: Matan Saloniko
+ * ID: 31857076-9
+ *************************/
+
 #include <sstream>
 #include "timeseries.h"
 

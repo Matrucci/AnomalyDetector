@@ -1,4 +1,7 @@
-
+/**************************
+ * Author: Matan Saloniko
+ * ID: 31857076-9
+ *************************/
 
 #ifndef COMMANDS_H_
 #define COMMANDS_H_
@@ -19,14 +22,9 @@ public:
 	virtual void write(float f)=0;
 	virtual void read(float* f)=0;
 	virtual ~DefaultIO(){}
-
-	// you may add additional methods here
 };
 
-// you may add here helper classes
 
-
-// you may edit this class
 class Command{
 protected:
     DefaultIO* dio;
@@ -38,17 +36,23 @@ public:
     virtual ~Command(){}
 };
 
-// implement here your command classes
-
+/********************************************
+ * Command class for uploading the csv files
+ *******************************************/
 class UploadTS: public Command {
     string description = "1.upload a time series csv file\n";
     int rows = 0;
 public:
     UploadTS(DefaultIO* dio): Command(dio) {};
+
+    /************************************************
+     * Executing.
+     * Getting a train csv file and a test csv file.
+     ***********************************************/
     virtual void execute() {
+        //Getting the train csv
         dio->write("Please upload your local train CSV file.\n");
         ofstream trainFile("anomalyTrain.csv");
-        //trainFile.open("anomalyTrain.csv");
         string trainline = dio->read() + '\n';
         while (trainline != "done\n") {
             trainFile << trainline;
@@ -57,9 +61,9 @@ public:
         trainFile.close();
         dio->write("Upload complete.\n");
 
+        //Getting the test csv
         dio->write("Please upload your local test CSV file.\n");
         ofstream testFile("anomalyTest.csv");
-        //testFile.open("anomalyTest.csv");
         string testline = dio->read() + '\n';
         while (testline != "done\n") {
             this->rows++;
@@ -69,23 +73,36 @@ public:
         testFile.close();
         this->rows--;
         dio->write("Upload complete.\n");
-        //cout << "THIS IS THE ROWS: " << this->rows << endl;
     }
+
+    /******************************************
+     * Printing the description of the class.
+     *****************************************/
     virtual void printDes() {
         dio->write(description);
     }
+
+    /**************************************************************************
+     * @return The number of rows in the test file (not including the titles).
+     **************************************************************************/
     int* getRows() {
-        //cout <<"ROWS: " << *&this->rows << endl;
         return &this->rows;
     }
 };
 
-
+/*******************************************************
+ * Command class for changing the correlation threshold
+ *******************************************************/
 class Settings: public Command {
     string description = "2.algorithm settings\n";
     float threshold = 0.9;
 public:
     Settings(DefaultIO* dio): Command(dio) {};
+
+    /*************************************************************************************************
+     * Executing.
+     * Displaying the current threshold (0.9 by default) and giving the user an option to change it.
+     ************************************************************************************************/
     virtual void execute() {
         dio->write("The current correlation threshold is " + std::to_string(threshold) + "\n");
         dio->write("Type a new threshold\n");
@@ -97,75 +114,123 @@ public:
         }
         threshold = limit;
     }
+
+    /**************************************
+     * @return A pointer to the threshold.
+     *************************************/
     float *getThreshold() {
         return &this->threshold;
     }
+
+    /******************************************
+     * Printing the description of the class.
+     *****************************************/
     virtual void printDes() {
         dio->write(description);
     }
 };
 
+/********************************************
+ * Command class for detecting the anomalies.
+ ********************************************/
 class DetectAnomalies: public Command {
     string description = "3.detect anomalies\n";
     HybridAnomalyDetector had;
     vector<AnomalyReport> report;
+    float* limit;
 public:
     DetectAnomalies(DefaultIO* dio): Command(dio) {};
+
+    /******************************************************
+     * Executing.
+     * Learning and detecting with the changed threshold.
+     *****************************************************/
     virtual void execute() {
-        //TimeSeries train("anomalyTrain.csv");
-        //TimeSeries test("anomalyTest.csv");
+        had = HybridAnomalyDetector(*limit);
         had.learnNormal(TimeSeries("anomalyTrain.csv"));
         report = had.detect(TimeSeries("anomalyTest.csv"));
         dio->write("anomaly detection complete.\n");
     }
-    void setThreshold(float *limit) {
-        had = HybridAnomalyDetector(*limit);
+
+    /**************************************************************
+     * @param nLimit - the new threshold for the anomaly detector.
+     **************************************************************/
+    void setThreshold(float *nLimit) {
+        this->limit = nLimit;
     }
+
+    /***************************************
+     * @return - The anomaly report vector.
+     **************************************/
     vector<AnomalyReport> *getAnomalies() {
         return &this->report;
     }
+    /******************************************
+     * Printing the description of the class.
+     *****************************************/
     virtual void printDes() {
         dio->write(description);
     }
 };
 
+/********************************************
+ * Command class for displaying the results.
+ ********************************************/
 class Results: public Command {
     string description = "4.display results\n";
     vector<AnomalyReport> *ar;
 public:
     Results(DefaultIO* dio): Command(dio) {};
-    virtual void execute() {
 
+    /***************************************
+     * Executing.
+     * Displaying all anomalies detected.
+     ***************************************/
+    virtual void execute() {
         for(AnomalyReport a: *ar) {
             dio->write(std::to_string(a.timeStep) + "\t" + a.description + "\n");
         }
         dio->write("Done.\n");
-
     }
+
+    /****************************************
+     * @param report - the anomalies vector.
+     ****************************************/
     void setReport(vector<AnomalyReport> *report) {
         this->ar = report;
     }
+
+    /******************************************
+     * Printing the description of the class.
+     *****************************************/
     virtual void printDes() {
         dio->write(description);
     }
 };
 
+/**************************************************************************
+ * Command class for getting anomalies timesteps and analyzing the results.
+ **************************************************************************/
 class UploadAndAnalyze: public Command {
     string description = "5.upload anomalies and analyze results\n";
     vector<AnomalyReport> *ar;
     int *rows;
 public:
     UploadAndAnalyze(DefaultIO* dio): Command(dio) {};
-    virtual void execute() {
 
-        vector<int> timeSteps;
-        vector<int> anomalies;
-        float P = 0;
-        float tp = 0;
-        float sum = 0;
-        float fp = 0;
-        //timeSteps.push_back(0);
+    /************************************************************************
+     * Executing.
+     * Getting time steps ranges and analyzing the results of the detection.
+     ***********************************************************************/
+    virtual void execute() {
+        vector<int> timeSteps; //Reported anomalies from the user.
+        vector<int> anomalies; //Anomalies found from the detection.
+        float P = 0; //The number of time step ranges given.
+        float tp = 0; //Number of true positives.
+        float sum = 0; //Number of anomalies reported by the user.
+        float fp = 0; //Number of false positives
         int j = 0;
+        //Getting the file from the user.
         dio->write("Please upload your local anomalies file.\n");
         string line = dio->read() + '\n';
         while (line != "done\n") {
@@ -175,7 +240,6 @@ public:
                     j++;
                     timeSteps.push_back(0);
                 } else {
-                    //cout << (line[i] - 48) << endl;
                     timeSteps[j] = timeSteps[j] * 10 + (line[i] - 48);
                 }
             }
@@ -186,11 +250,11 @@ public:
         dio->write("Upload complete.\n");
 
 
-
         for (AnomalyReport a: *ar) {
             anomalies.push_back(a.timeStep);
         }
 
+        //Creating a vector that combines a series of anomalies with following times.
         int currentTime = ar->at(0).timeStep;
         vector<int> group;
         group.push_back(ar->at(0).timeStep);
@@ -204,23 +268,7 @@ public:
         }
         group.push_back(anomalies[anomalies.size() - 1]);
 
-/*
-
-        for (int a: group) {
-            cout << a << "," << endl;
-        }
-        cout << "-------------------" << endl;
-*/
-
-
-        /*for (int i = 0; i < anomalies.size() - 1; i++) {
-            if (anomalies[i + 1] != currentTime + 1 ) {
-                group.push_back(anomalies[i]);
-            }
-            currentTime = anomalies[i];
-        }*/
-
-
+        //Calculating the true positives.
         for (int i = 0; i < timeSteps.size(); i += 2) {
             for (int k = 0; k < anomalies.size(); k++) {
                 if (timeSteps[i] <= anomalies[k] && anomalies[k] <= timeSteps[i + 1]) {
@@ -229,43 +277,37 @@ public:
                 }
             }
         }
-        /*for (int i = 0; i < timeSteps.size(); i += 2) {
-            for (int k = 0; k < group.size(); k++) {
-                if ((timeSteps[i] <= group[k] && group[k] <= timeSteps[i + 1])) {
-                    tp++;
-                    break;
-                }
-            }
-        }*/
 
-
-        /*for (int a: timeSteps) {
-            cout << a << "," << endl;
-        }
-        cout << "-------------------" << endl;
-*/
-
+        //Calculating the number of anomalies reported.
         for (int i = 0; i < timeSteps.size() - 1; i+=2) {
             sum += (timeSteps[i + 1] - timeSteps[i]) + 1;
         }
 
-        //cout << this->rows << endl;
+        //Calculating true positive rate.
         float tpr = (tp / P);
+        //Making sure the rate only shows 3 digits after decimal point.
         tpr = tpr * 1000;
         tpr = floorf(tpr);
         tpr = tpr / 1000;
-        //removeZero(tpr);
-        float fpr = ((group.size() / 2) - tp) / (*this->rows - sum);
+        fp = (group.size() / 2) - tp;
+        //Calculating false positive rate.
+        float fpr = fp / (*this->rows - sum);
+        //Making sure the rate only shows 3 digits after decimal point.
         fpr = fpr * 1000;
         fpr = floorf(fpr);
         fpr = fpr / 1000;
-        //removeZero(fpr);
-        //dio->write("True Positive Rate: " + std::to_string(tpr) + '\n');
-        //dio->write("False Positive Rate: " + std::to_string(fpr) + '\n');
+        //Printing to the user.
         dio->write("True Positive Rate: " + removeZero(tpr) + '\n');
         dio->write("False Positive Rate: " + removeZero(fpr) + '\n');
     }
+
+    /*****************************************************************
+     * Removing trailing zeros from the float and returning a string.
+     * @param num - the float we want to remove trailing zeros from.
+     * @return - a string without trailing zeros.
+     ****************************************************************/
     string removeZero(float num) {
+        //Just to remove any chance of getting -0.
         if (num == 0) {
             return "0";
         }
@@ -278,19 +320,29 @@ public:
             }
         }
         string strZ = str.substr(0, breakPoint + 1);
-        //cout << strZ << endl;
         return strZ;
     }
+
+    /******************************************
+     * Printing the description of the class.
+     *****************************************/
     virtual void printDes() {
         dio->write(description);
     }
+
+    /*****************************************
+     * @param report - the anomalies vector.
+     ****************************************/
     void setReport(vector<AnomalyReport> *report) {
         this->ar = report;
     }
+
+    /********************************************************************************
+     * @param fileRows - the number of rows in the test file (not including titles).
+     ********************************************************************************/
     void setRows(int* fileRows) {
         this->rows = fileRows;
     }
-
 };
 
 class ExitProgram: public Command {
@@ -300,6 +352,9 @@ public:
     virtual void execute() {
 
     }
+    /******************************************
+     * Printing the description of the class.
+     *****************************************/
     virtual void printDes() {
         dio->write(description);
     }

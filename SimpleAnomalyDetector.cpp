@@ -1,3 +1,7 @@
+/**************************
+ * Author: Matan Saloniko
+ * ID: 31857076-9
+ *************************/
 
 #include "SimpleAnomalyDetector.h"
 #include "minCircle.h"
@@ -6,11 +10,9 @@ SimpleAnomalyDetector::SimpleAnomalyDetector(float limit) {
     this->thresholdLimit = limit;
 }
 
-SimpleAnomalyDetector::SimpleAnomalyDetector() {
-}
+SimpleAnomalyDetector::SimpleAnomalyDetector() {}
 
-SimpleAnomalyDetector::~SimpleAnomalyDetector() {
-}
+SimpleAnomalyDetector::~SimpleAnomalyDetector() {}
 
 /************************************
  * Creating an array from the vector.

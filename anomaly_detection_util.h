@@ -1,6 +1,8 @@
-//
-// Created by Matan Saloniko on 20/10/2020.
-//
+/**************************
+ * Author: Matan Saloniko
+ * ID: 31857076-9
+ *************************/
+
 
 #ifndef ANOMALYDETECTOR_ANOMALY_DETECTION_UTIL_H
 #define ANOMALYDETECTOR_ANOMALY_DETECTION_UTIL_H

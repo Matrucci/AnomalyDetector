@@ -1,4 +1,7 @@
-
+/**************************
+ * Author: Matan Saloniko
+ * ID: 31857076-9
+ *************************/
 
 #ifndef CLI_H_
 #define CLI_H_
@@ -11,7 +14,6 @@ using namespace std;
 class CLI {
 	DefaultIO* dio;
 	Command* commands;
-	// you can add data members
 public:
 	CLI(DefaultIO* dio);
 	void start();

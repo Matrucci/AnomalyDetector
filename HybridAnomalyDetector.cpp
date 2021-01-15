@@ -1,19 +1,15 @@
+/**************************
+ * Author: Matan Saloniko
+ * ID: 31857076-9
+ *************************/
 
 #include "HybridAnomalyDetector.h"
 
-HybridAnomalyDetector::HybridAnomalyDetector(float limit) : SimpleAnomalyDetector(limit) {
-	// TODO Auto-generated constructor stub
+HybridAnomalyDetector::HybridAnomalyDetector(float limit) : SimpleAnomalyDetector(limit) {}
 
-}
+HybridAnomalyDetector::HybridAnomalyDetector() {}
 
-HybridAnomalyDetector::HybridAnomalyDetector() {
-    // TODO Auto-generated constructor stub
-
-}
-
-HybridAnomalyDetector::~HybridAnomalyDetector() {
-	// TODO Auto-generated destructor stub
-}
+HybridAnomalyDetector::~HybridAnomalyDetector() {}
 
 /************************************************************
  * Taking 2 float vectors and creating a point array.

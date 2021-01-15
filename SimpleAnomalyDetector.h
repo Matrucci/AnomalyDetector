@@ -1,3 +1,7 @@
+/**************************
+ * Author: Matan Saloniko
+ * ID: 31857076-9
+ *************************/
 
 
 #ifndef SIMPLEANOMALYDETECTOR_H_
