@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(AnomalyDetector MainCLI.cpp anomaly_detection_util.cpp
         SimpleAnomalyDetector.cpp timeseries.cpp minCircle.cpp HybridAnomalyDetector.cpp CLI.cpp
-        commands.h)
+        commands.h )

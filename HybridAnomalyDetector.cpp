@@ -1,8 +1,13 @@
 
 #include "HybridAnomalyDetector.h"
 
-HybridAnomalyDetector::HybridAnomalyDetector() {
+HybridAnomalyDetector::HybridAnomalyDetector(float limit) : SimpleAnomalyDetector(limit) {
 	// TODO Auto-generated constructor stub
+
+}
+
+HybridAnomalyDetector::HybridAnomalyDetector() {
+    // TODO Auto-generated constructor stub
 
 }
 
@@ -33,7 +38,7 @@ Point** buildPointArray(vector<float> *a, vector<float> *b) {
  * @return float - the distance.
  **************************************************************************************************/
 float HybridAnomalyDetector::distanceBetween(Point p, correlatedFeatures cf) {
-    if (cf.corrlation >= 0.9) {
+    if (cf.corrlation >= this->getThresholdLimit()) {
         return SimpleAnomalyDetector::distanceBetween(p, cf);
     }
     return distacneBetween(*cf.circleCenter, p);
@@ -49,7 +54,7 @@ float HybridAnomalyDetector::distanceBetween(Point p, correlatedFeatures cf) {
  * @param p - The pearson between the 2 features
  *************************************************************************/
 void HybridAnomalyDetector::learn(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p) {
-    if (p >= 0.9) {
+    if (p >= this->getThresholdLimit()) {
         SimpleAnomalyDetector::learn(vectors, features, i, j, p);
     } else if (p > 0.5) {
         vector<correlatedFeatures> cf = getNormalModel();

@@ -2,6 +2,10 @@
 #include "SimpleAnomalyDetector.h"
 #include "minCircle.h"
 
+SimpleAnomalyDetector::SimpleAnomalyDetector(float limit) {
+    this->thresholdLimit = limit;
+}
+
 SimpleAnomalyDetector::SimpleAnomalyDetector() {
 }
 
@@ -45,7 +49,7 @@ Point** createPoints(vector<float> *a, vector<float> *b) {
  * @param p - The pearson between the 2 features
  *************************************************************************/
 void SimpleAnomalyDetector::learn(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p) {
-    if (p >= 0.9) {
+    if (p >= this->thresholdLimit) {
         Point** points = createPoints(&vectors[i], &vectors[j]);
         int sizeV = vectors[0].size();
         Line reg = linear_reg(points, sizeV);

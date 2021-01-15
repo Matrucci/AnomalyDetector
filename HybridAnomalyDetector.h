@@ -8,10 +8,10 @@
 
 class HybridAnomalyDetector:public SimpleAnomalyDetector {
 public:
-	HybridAnomalyDetector();
+	explicit HybridAnomalyDetector(float limit);
+    HybridAnomalyDetector();
 	virtual ~HybridAnomalyDetector();
     virtual void learn(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p);
-    void midPearson(vector<vector<float>> vectors, vector<string> *features, int i, int j, float p);
     virtual float distanceBetween(Point p, correlatedFeatures cf);
 };
 

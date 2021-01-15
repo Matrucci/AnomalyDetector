@@ -10,29 +10,39 @@ void CLI::start(){
     float option;
     bool run = true;
     Command** menu = new Command*[size];
-    menu[0] = new uploadTS(dio);
-    menu[1] = new settings(dio);
-    menu[2] = new detectAnomalies(dio);
-    menu[3] = new results(dio);
-    menu[4] = new uploadAndAnalyze(dio);
-    menu[5] = new exitProgram(dio);
+    Settings *settings = new Settings(dio);
+    DetectAnomalies *detectAnomalies = new DetectAnomalies(dio);
+    detectAnomalies->setThreshold(settings->getThreshold());
+    Results *results = new Results(dio);
+    results->setReport(detectAnomalies->getAnomalies());
+    UploadAndAnalyze *uploadAndAnalyze = new UploadAndAnalyze(dio);
+    uploadAndAnalyze->setReport(detectAnomalies->getAnomalies());
+    menu[0] = new UploadTS(dio);
+    menu[1] = settings;
+    menu[2] = detectAnomalies;
+    menu[3] = results;
+    menu[4] = uploadAndAnalyze;
+    menu[5] = new ExitProgram(dio);
     //this->commands = *menu;
     while (run) {
         dio->write("Welcome to the Anomaly Detection Server.\n");
         dio->write("Please choose an option:\n");
-
+        //cout << "TEST" << endl;
         for (int i = 0; i < size; i++) {
             menu[i]->printDes();
         }
         dio->read(&option);
         if (floorf(option) == option && option > 0 && option < 7) {
             int iOption = int(option);
-            menu[iOption - 1]->execute();
             if (iOption == 6) {
                 run = false;
+                break;
             }
+            menu[iOption - 1]->execute();
         }
-        //cout << "DONE" << endl;
+        else {
+            break;
+        }
     }
     dio->write("Welcome to the Anomaly Detection Server.\n");
     dio->write("Please choose an option:\n");
