@@ -10,6 +10,7 @@ void CLI::start(){
     float option;
     bool run = true;
     Command** menu = new Command*[size];
+    UploadTS *uploadTs = new UploadTS(dio);
     Settings *settings = new Settings(dio);
     DetectAnomalies *detectAnomalies = new DetectAnomalies(dio);
     detectAnomalies->setThreshold(settings->getThreshold());
@@ -17,7 +18,8 @@ void CLI::start(){
     results->setReport(detectAnomalies->getAnomalies());
     UploadAndAnalyze *uploadAndAnalyze = new UploadAndAnalyze(dio);
     uploadAndAnalyze->setReport(detectAnomalies->getAnomalies());
-    menu[0] = new UploadTS(dio);
+    uploadAndAnalyze->setRows(uploadTs->getRows());
+    menu[0] = uploadTs;
     menu[1] = settings;
     menu[2] = detectAnomalies;
     menu[3] = results;

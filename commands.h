@@ -42,6 +42,7 @@ public:
 
 class UploadTS: public Command {
     string description = "1.upload a time series csv file\n";
+    int rows = 0;
 public:
     UploadTS(DefaultIO* dio): Command(dio) {};
     virtual void execute() {
@@ -61,14 +62,21 @@ public:
         //testFile.open("anomalyTest.csv");
         string testline = dio->read() + '\n';
         while (testline != "done\n") {
+            this->rows++;
             testFile << testline;
             testline = dio->read() + '\n';
         }
         testFile.close();
+        this->rows--;
         dio->write("Upload complete.\n");
+        //cout << "THIS IS THE ROWS: " << this->rows << endl;
     }
     virtual void printDes() {
         dio->write(description);
+    }
+    int* getRows() {
+        //cout <<"ROWS: " << *&this->rows << endl;
+        return &this->rows;
     }
 };
 
@@ -145,6 +153,7 @@ public:
 class UploadAndAnalyze: public Command {
     string description = "5.upload anomalies and analyze results\n";
     vector<AnomalyReport> *ar;
+    int *rows;
 public:
     UploadAndAnalyze(DefaultIO* dio): Command(dio) {};
     virtual void execute() {
@@ -175,21 +184,33 @@ public:
             line = dio->read() + '\n';
         }
         dio->write("Upload complete.\n");
-        int currentTime = ar->at(0).timeStep;
-        vector<int> group;
-        group.push_back(ar->at(0).timeStep);
 
-        /*for (int i = 0; i < ar->size() - 1; i++) {
-            if (ar->at(i + 1).timeStep != currentTime + 1 || ar->at(i).description != ar->at(i + 1).description) {
-                group.push_back(anomalies[i]);
-            }
-            currentTime = ar->at(i + 1).timeStep;
-            cout<<i<<endl;
-        }*/
+
 
         for (AnomalyReport a: *ar) {
             anomalies.push_back(a.timeStep);
         }
+
+        int currentTime = ar->at(0).timeStep;
+        vector<int> group;
+        group.push_back(ar->at(0).timeStep);
+
+        for (int i = 0; i < ar->size() - 1; i++) {
+            if (ar->at(i + 1).timeStep != currentTime + 1 || ar->at(i).description != ar->at(i + 1).description) {
+                group.push_back(anomalies[i]);
+                group.push_back(anomalies[i + 1]);
+            }
+            currentTime = ar->at(i + 1).timeStep;
+        }
+        group.push_back(anomalies[anomalies.size() - 1]);
+
+/*
+
+        for (int a: group) {
+            cout << a << "," << endl;
+        }
+        cout << "-------------------" << endl;
+*/
 
 
         /*for (int i = 0; i < anomalies.size() - 1; i++) {
@@ -208,18 +229,57 @@ public:
                 }
             }
         }
-        /*
-        for (int a: timeSteps) {
+        /*for (int i = 0; i < timeSteps.size(); i += 2) {
+            for (int k = 0; k < group.size(); k++) {
+                if ((timeSteps[i] <= group[k] && group[k] <= timeSteps[i + 1])) {
+                    tp++;
+                    break;
+                }
+            }
+        }*/
+
+
+        /*for (int a: timeSteps) {
             cout << a << "," << endl;
         }
         cout << "-------------------" << endl;
-        */
-        for (int i = 0; i < timeSteps.size() - 1; i++) {
+*/
+
+        for (int i = 0; i < timeSteps.size() - 1; i+=2) {
             sum += (timeSteps[i + 1] - timeSteps[i]) + 1;
         }
-        //cout << ((P - tp) / (200 - sum)) << endl;
-        dio->write("True Positive Rate: " + std::to_string(tp / P) + '\n');
-        dio->write("False Positive Rate: " + std::to_string((P - tp) / (200 - sum)) + '\n');
+
+        //cout << this->rows << endl;
+        float tpr = (tp / P);
+        tpr = tpr * 1000;
+        tpr = floorf(tpr);
+        tpr = tpr / 1000;
+        //removeZero(tpr);
+        float fpr = ((group.size() / 2) - tp) / (*this->rows - sum);
+        fpr = fpr * 1000;
+        fpr = floorf(fpr);
+        fpr = fpr / 1000;
+        //removeZero(fpr);
+        //dio->write("True Positive Rate: " + std::to_string(tpr) + '\n');
+        //dio->write("False Positive Rate: " + std::to_string(fpr) + '\n');
+        dio->write("True Positive Rate: " + removeZero(tpr) + '\n');
+        dio->write("False Positive Rate: " + removeZero(fpr) + '\n');
+    }
+    string removeZero(float num) {
+        if (num == 0) {
+            return "0";
+        }
+        string str = std::to_string(num);
+        int breakPoint;
+        for (int i = str.size() - 1; i >= 0; i--) {
+            if (str[i] != '0' && str[i] != '.') {
+                breakPoint = i;
+                break;
+            }
+        }
+        string strZ = str.substr(0, breakPoint + 1);
+        //cout << strZ << endl;
+        return strZ;
     }
     virtual void printDes() {
         dio->write(description);
@@ -227,6 +287,10 @@ public:
     void setReport(vector<AnomalyReport> *report) {
         this->ar = report;
     }
+    void setRows(int* fileRows) {
+        this->rows = fileRows;
+    }
+
 };
 
 class ExitProgram: public Command {
