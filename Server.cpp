@@ -29,21 +29,25 @@ Server::Server(int port) throw(const char*) {
     }
 }
 
-void Server::start(ClientHandler& ch) throw(const char*){
-    t = new thread([&ch, this] () {
-        cout << "Waiting for a client" << endl;
-        socklen_t clientSize = sizeof(client);
-        while (true) {
-            int aClient = accept(fd, (struct sockaddr*) &client, &clientSize);
-            if (aClient < 0) {
-                throw "Accept failure";
-            }
-            cout << "Client connected!" << endl;
-            ch.handle(aClient);
-            close(aClient);
-            close(fd);
+void newThread(ClientHandler* ch, int _fd, sockaddr_in client) {
+    cout << "Waiting for a client" << endl;
+    socklen_t clientSize = sizeof(client);
+    while (true) {
+        int aClient = accept(_fd, (struct sockaddr *) &client, &clientSize);
+        if (aClient < 0) {
+            throw "Accept failure";
         }
-    });
+        cout << "Client connected!" << endl;
+        ch->handle(aClient);
+        //cout <<"ydb" << endl;
+        close(aClient);
+        close(_fd);
+    }
+}
+
+void Server::start(ClientHandler& ch) throw(const char*) {
+    t = new thread(newThread, &ch, fd, client);
+    t->detach();
 }
 
 void Server::stop(){
