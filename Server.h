@@ -10,6 +10,15 @@
 
 
 #include <thread>
+#include <sys/socket.h>
+#include <iostream>
+#include <netinet/in.h>
+#include <pthread.h>
+#include <thread>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -27,7 +36,12 @@ class ClientHandler{
 class AnomalyDetectionHandler:public ClientHandler{
 	public:
     virtual void handle(int clientID){
-
+        char buffer[1024];
+        //bzero
+        int n = read(clientID, buffer, 100);
+        cout << buffer << endl;
+        const char* hello = "Hello from server";
+        send(clientID, hello, strlen(hello), 0);
     }
 };
 
@@ -35,6 +49,9 @@ class AnomalyDetectionHandler:public ClientHandler{
 // implement on Server.cpp
 class Server {
 	thread* t; // the thread to run the start() method in
+    int fd;
+    sockaddr_in server;
+    sockaddr_in client;
 
 	// you may add data members
 
