@@ -41,22 +41,21 @@ public:
         clientID = _clientID;
     }
     string read() override {
-        char buffer[1];
-        string output = "";
-
-        recv(clientID, buffer, 1, 0);
-        while (buffer[0] != '\n') {
-            output += buffer[0];
-            recv(clientID, buffer, 1, 0);
+        char buffer;
+        string output;
+        recv(clientID, &buffer, sizeof(char), 0);
+        while (buffer != '\n') {
+            output += buffer;
+            recv(clientID, &buffer, 1, 0);
         }
         return output;
     }
     void write(string text) override {
-        send(clientID, &text[0], text.size(), 0);
+        send(clientID, text.c_str(), text.size(), 0);
     }
     void write(float f) override {
         string text = std::to_string(f);
-        send(clientID, &text[0], text.size(), 0);
+        send(clientID, text.c_str(), text.size(), 0);
     }
     void read(float* f) override {
         *f = stof(read());
@@ -72,13 +71,6 @@ class AnomalyDetectionHandler:public ClientHandler{
         SocketIO socketIo = SocketIO(clientID);
         CLI cli(&socketIo);
         cli.start();
-   /*     char buffer[1024];
-        //bzero
-        int n = read(clientID, buffer, 100);
-        cout << buffer << endl;
-        const char* hello = "Hello from server";
-        send(clientID, hello, strlen(hello), 0);*/
-
     }
 };
 
@@ -89,6 +81,7 @@ class Server {
     int fd;
     sockaddr_in server;
     sockaddr_in client;
+    //bool run = false;
 
 	// you may add data members
 
