@@ -19,33 +19,6 @@ class TimeSeries{
     vector<string> headers;
 public:
     TimeSeries(const char* CSVfileName);
-	/*TimeSeries(const char* CSVfileName){
-	    vector<string> headers;
-	    ifstream ip(CSVfileName);
-	    if (!ip.is_open()) {
-	        std::cout << "ERROR: File could not be opened" << '\n';
-	    }
-	    string title;
-	    if (ip.good()) {
-            while (getline(ip, title, ',')) {
-                headers.push_back(title);
-            }
-	    }
-	    vector<float> features[headers.size()];
-	    string data;
-	    float parsed;
-	    while (ip.good()) {
-            for(int i = 0; i < headers.size(); i++) {
-                getline(ip, data, ',');
-                parsed = std::stof(data);
-                features[i].push_back(parsed);
-            }
-	    }
-	    for (int i = 0; i < headers.size(); i++) {
-            dataMap.insert(std::pair<string, vector<float>>(headers[i], features[i]));
-	    }
-	}
-	 */
     float getFeatureOnTime(string feature, float time);
     void addRow(vector<float> newRow);
     vector<string> getFeatures() const;
